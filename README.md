@@ -34,7 +34,29 @@ src/
     └── blog/
 ```
 
-## Blog
+## Deploy (Dokploy)
+
+**Port 4321 is dev only** (`npm run dev`). Production uses a different port — using 4321 in Dokploy causes **502 Bad Gateway**.
+
+### Nixpacks / Node (default)
+
+| Setting | Value |
+|---------|-------|
+| **Container port** | `3000` |
+| Build command | `npm run build` |
+| Start command | `npm run start` |
+
+Optional: set env `PORT=3000` (must match the port in Dokploy).
+
+### Docker
+
+| Setting | Value |
+|---------|-------|
+| **Container port** | `80` |
+| Dockerfile | `./Dockerfile` |
+
+Nginx serves the static `dist/` folder. SPA routes (`/projects/...`, `/blog/...`) are handled automatically.
+
 
 Add markdown files to `src/content/blog/` with frontmatter:
 

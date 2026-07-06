@@ -30,7 +30,7 @@ const posts = (await getCollection("blog"))
       <BlogPreview posts={posts} />
 
       <CompanyLogos client:visible />
-      <SiteFooter />
     </div>
+    <SiteFooter client:visible />
   </main>
 </Layout>
