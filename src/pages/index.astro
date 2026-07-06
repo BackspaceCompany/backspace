@@ -1,0 +1,36 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { projects } from "@/data/projects";
+import { HomeHero } from "@/components/home-hero";
+import { QuoteBlock } from "@/components/quote-block";
+import { ProjectCard } from "@/components/project-card";
+import { CompanyLogos } from "@/components/company-logos";
+import { SiteFooter } from "@/components/site-footer";
+import BlogPreview from "@/components/BlogPreview.astro";
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<Layout title="Backspace® 2024–2026">
+  <main class="bg-background text-foreground">
+    <div class="mx-auto max-w-[760px] px-6">
+      <HomeHero client:load />
+
+      <QuoteBlock client:visible />
+
+      <section class="border-t border-[#e6e6e6] pb-2 pt-2" aria-label="Projects">
+        {projects.map((project, index) => (
+          <ProjectCard client:visible project={project} index={index} />
+        ))}
+      </section>
+
+      <BlogPreview posts={posts} />
+
+      <CompanyLogos client:visible />
+      <SiteFooter />
+    </div>
+  </main>
+</Layout>

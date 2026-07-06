@@ -2,7 +2,7 @@
 
 Venture studio site for **Backspace** — Claveira, Akaragi, Ivory Roots, and FREEDOM.
 
-Built with React, TypeScript, Tailwind CSS, and Vite.
+Built with **Astro**, **React islands**, **TypeScript**, and **Tailwind CSS**.
 
 ## Getting started
 
@@ -10,6 +10,8 @@ Built with React, TypeScript, Tailwind CSS, and Vite.
 npm install
 npm run dev
 ```
+
+Site runs at `http://localhost:4321`
 
 ## Build
 
@@ -22,8 +24,24 @@ npm run preview
 
 ```
 src/
-├── components/     # Navbar, project cards, quote block, footer
-├── data/projects.ts
-├── pages/          # Home + project detail pages
-└── App.tsx
+├── components/        # Astro + React (interactive islands)
+├── content/blog/      # Markdown blog posts
+├── data/projects.ts   # Venture data
+├── layouts/
+└── pages/
+    ├── index.astro
+    ├── projects/[id].astro
+    └── blog/
+```
+
+## Blog
+
+Add markdown files to `src/content/blog/` with frontmatter:
+
+```yaml
+---
+title: "Post title"
+description: "Short summary"
+pubDate: 2025-11-01
+---
 ```

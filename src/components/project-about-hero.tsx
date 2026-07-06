@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
 import { iconMap, type InlineSegment, type Project } from "@/data/projects";
 
 function InlineIcon({ icon, color }: { icon: string; color: string }) {
@@ -36,7 +35,10 @@ function RichParagraph({
   );
 }
 
-function TrustedLogoCell({ name, icon: Icon }: { name: string; icon: LucideIcon }) {
+function TrustedLogoCell({ name, icon }: { name: string; icon: string }) {
+  const Icon = iconMap[icon];
+  if (!Icon) return null;
+
   return (
     <div className="flex flex-col items-center justify-center gap-2 px-4 py-5 text-[#8a8a8a]">
       <Icon className="h-5 w-5" strokeWidth={1.5} />

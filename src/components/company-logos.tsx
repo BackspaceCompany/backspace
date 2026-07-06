@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 
@@ -24,8 +23,8 @@ export function CompanyLogos() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.05, duration: 0.4 }}
           >
-            <Link
-              to={project.href}
+            <a
+              href={project.href}
               className="group flex flex-col items-center gap-3 text-center transition-transform hover:-translate-y-0.5"
             >
               <div
@@ -37,7 +36,7 @@ export function CompanyLogos() {
               <span className="text-xs font-medium text-[#8a8a8a] transition-colors group-hover:text-[#111]">
                 {project.name}
               </span>
-            </Link>
+            </a>
           </motion.div>
         ))}
       </div>

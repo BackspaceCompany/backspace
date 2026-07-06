@@ -1,23 +1,26 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { projects } from "@/data/projects";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
+  { label: "Blog", href: "/blog" },
   { label: "Email", href: "mailto:hello@backspace.company" },
   { label: "LinkedIn", href: "#" },
   { label: "X", href: "#" },
   { label: "GitHub", href: "#" },
 ];
 
-export function Navbar() {
+type NavbarProps = {
+  currentPath: string;
+};
+
+export function Navbar({ currentPath }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const location = useLocation();
-  const activeId = location.pathname.match(/\/projects\/([^/]+)/)?.[1];
+  const activeId = currentPath.match(/\/projects\/([^/]+)/)?.[1];
 
   const openMenu = () => {
     clearTimeout(closeTimer.current);
@@ -42,7 +45,7 @@ export function Navbar() {
 
   useEffect(() => {
     closeMenu();
-  }, [location.pathname]);
+  }, [currentPath]);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
@@ -68,13 +71,13 @@ export function Navbar() {
       )}
     >
       <div className="mx-auto flex max-w-[760px] items-center gap-3 px-6 py-3.5 text-[13px] sm:gap-5">
-        <Link
-          to="/"
+        <a
+          href="/"
           aria-label="Backspace home"
           className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-[#111] text-sm font-bold text-[#fafafa] transition-transform hover:scale-95"
         >
           ⌫
-        </Link>
+        </a>
 
         <div
           ref={menuRef}
@@ -93,7 +96,6 @@ export function Navbar() {
             <ChevronDown className={cn("h-3 w-3 transition-transform", open && "rotate-180")} />
           </button>
 
-          {/* pt-2 bridges the gap so the pointer path stays inside the menu */}
           <div
             className={cn(
               "absolute left-0 top-full z-50 w-[min(520px,calc(100vw-48px))] pt-2",
@@ -113,9 +115,9 @@ export function Navbar() {
             >
               <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                 {projects.map((p) => (
-                  <Link
+                  <a
                     key={p.id}
-                    to={p.href}
+                    href={p.href}
                     onClick={closeMenu}
                     className={cn(
                       "flex gap-3 rounded-xl p-3 transition-colors hover:bg-[#f0f0f0]",
@@ -132,7 +134,7 @@ export function Navbar() {
                       <b className="block text-sm font-semibold">{p.name}</b>
                       <span className="block text-xs leading-snug text-[#8a8a8a]">{p.tagline}</span>
                     </div>
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>
@@ -144,7 +146,10 @@ export function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="group relative whitespace-nowrap transition-colors hover:text-[#111]"
+              className={cn(
+                "group relative whitespace-nowrap transition-colors hover:text-[#111]",
+                currentPath.startsWith(link.href) && link.href !== "#" && "text-[#111]",
+              )}
             >
               {link.label}
               <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform group-hover:scale-x-100" />

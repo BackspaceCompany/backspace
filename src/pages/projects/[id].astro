@@ -1,0 +1,75 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { projects, getProject } from "@/data/projects";
+import { ProjectAboutHero } from "@/components/project-about-hero";
+import { SiteFooter } from "@/components/site-footer";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { id: project.id },
+  }));
+}
+
+const { id } = Astro.params;
+const project = getProject(id!);
+
+if (!project) {
+  return Astro.redirect("/");
+}
+---
+
+<Layout title={`${project.name} — Backspace®`} description={project.lead}>
+  <main class="bg-background text-foreground">
+    <div class="mx-auto max-w-[760px] px-6">
+      <ProjectAboutHero client:load project={project} />
+
+      <div class="flex items-center gap-3 border-b border-[#e6e6e6] py-8">
+        <div
+          class="flex h-9 w-9 items-center justify-center rounded-lg text-sm font-bold text-white"
+          style={{ background: project.color }}
+        >
+          {project.letter}
+        </div>
+        <div>
+          <p class="text-[13px] text-[#8a8a8a]">{project.role}</p>
+          <p class="text-sm font-medium">
+            {project.name}
+            <span
+              class:list={[
+                "ml-2 inline-flex items-center gap-1 rounded-full border border-[#e6e6e6] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#8a8a8a]",
+                project.live && "before:inline-block before:h-1.5 before:w-1.5 before:rounded-full before:bg-[#0f7b4d]",
+              ]}
+            >
+              {project.status}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <section class="border-b border-[#e6e6e6] py-10">
+        <h2 class="mb-4 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">
+          Roadmap
+        </h2>
+        <p class="max-w-[560px] italic text-[#8a8a8a]">
+          Milestones and timeline will go here — you'll define the roadmap for {project.name} next.
+        </p>
+      </section>
+
+      <section class="py-10">
+        <h2 class="mb-4 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">
+          Work in progress
+        </h2>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div class="flex aspect-[16/10] items-center justify-center rounded-xl border border-[#e6e6e6] bg-gradient-to-br from-white to-[#f2f2f2] text-xs uppercase tracking-wide text-[#8a8a8a] sm:col-span-2 sm:aspect-[21/9]">
+            preview
+          </div>
+        </div>
+        <a href="/" class="mt-8 inline-block text-sm text-[#8a8a8a] transition-colors hover:text-[#111]">
+          ← Back to studio
+        </a>
+      </section>
+
+      <SiteFooter />
+    </div>
+  </main>
+</Layout>

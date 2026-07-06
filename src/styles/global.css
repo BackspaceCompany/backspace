@@ -13,7 +13,6 @@
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --font-sans: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 :root {
@@ -51,12 +50,31 @@ body {
   overflow-x: clip;
 }
 
-#root {
-  min-height: 100vh;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+}
+
+.prose-blog h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.prose-blog p {
+  margin-bottom: 1rem;
+  color: #444;
+  line-height: 1.65;
+}
+
+.prose-blog ul {
+  margin-bottom: 1rem;
+  padding-left: 1.25rem;
+  color: #444;
+}
+
+.prose-blog li {
+  margin-bottom: 0.35rem;
 }

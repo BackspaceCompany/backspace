@@ -24,7 +24,7 @@ export type InlineSegment =
 
 export type TrustedLogo = {
   name: string;
-  icon: LucideIcon;
+  icon: string;
 };
 
 export type ProjectAbout = {
@@ -68,6 +68,7 @@ export const iconMap: Record<string, LucideIcon> = {
   bulb: Lightbulb,
   grid: LayoutGrid,
   link: Link2,
+  circle: Circle,
 };
 
 export const projects: Project[] = [
@@ -101,10 +102,10 @@ export const projects: Project[] = [
       ],
       trustedLabel: "Built alongside teams at",
       trustedBy: [
-        { name: "Akaragi", icon: Store },
-        { name: "Ivory Roots", icon: ShoppingBag },
-        { name: "FREEDOM", icon: Brain },
-        { name: "Backspace", icon: Circle },
+        { name: "Akaragi", icon: "store" },
+        { name: "Ivory Roots", icon: "bag" },
+        { name: "FREEDOM", icon: "brain" },
+        { name: "Backspace", icon: "circle" },
       ],
     },
   },
@@ -138,10 +139,10 @@ export const projects: Project[] = [
       ],
       trustedLabel: "Powering commerce for",
       trustedBy: [
-        { name: "Ivory Roots", icon: ShoppingBag },
-        { name: "Claveira", icon: LayoutGrid },
-        { name: "Backspace", icon: Circle },
-        { name: "Abidjan", icon: Globe },
+        { name: "Ivory Roots", icon: "bag" },
+        { name: "Claveira", icon: "grid" },
+        { name: "Backspace", icon: "circle" },
+        { name: "Abidjan", icon: "globe" },
       ],
     },
   },
@@ -175,10 +176,10 @@ export const projects: Project[] = [
       ],
       trustedLabel: "Built on infrastructure from",
       trustedBy: [
-        { name: "Akaragi", icon: Store },
-        { name: "Backspace", icon: Circle },
-        { name: "Claveira", icon: LayoutGrid },
-        { name: "Abidjan", icon: Globe },
+        { name: "Akaragi", icon: "store" },
+        { name: "Backspace", icon: "circle" },
+        { name: "Claveira", icon: "grid" },
+        { name: "Abidjan", icon: "globe" },
       ],
     },
   },
@@ -212,10 +213,10 @@ export const projects: Project[] = [
       ],
       trustedLabel: "Research within",
       trustedBy: [
-        { name: "Backspace", icon: Circle },
-        { name: "Claveira", icon: LayoutGrid },
-        { name: "Akaragi", icon: Store },
-        { name: "Paris", icon: Globe },
+        { name: "Backspace", icon: "circle" },
+        { name: "Claveira", icon: "grid" },
+        { name: "Akaragi", icon: "store" },
+        { name: "Paris", icon: "globe" },
       ],
     },
   },

@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+  posts: CollectionEntry<"blog">[];
+};
+
+const { posts } = Astro.props;
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+---
+
+<section class="border-t border-[#e6e6e6] py-10" aria-label="Latest on the blog">
+  <div class="mb-6 flex items-end justify-between gap-4">
+    <h2 class="text-[13px] font-semibold uppercase tracking-[0.06em] text-[#8a8a8a]">
+      Latest on the blog
+    </h2>
+    <a href="/blog" class="text-sm text-[#8a8a8a] transition-colors hover:text-[#111]">
+      View all →
+    </a>
+  </div>
+
+  <div class="divide-y divide-[#e6e6e6] border-y border-[#e6e6e6]">
+    {
+      posts.map((post) => (
+        <a
+          href={`/blog/${post.id}`}
+          class="group block py-5 transition-colors hover:bg-[#f0f0f0] -mx-3 px-3 rounded-lg"
+        >
+          <time class="text-xs text-[#8a8a8a]" datetime={post.data.pubDate.toISOString()}>
+            {formatDate(post.data.pubDate)}
+          </time>
+          <h3 class="mt-1 text-[15px] font-semibold group-hover:underline">{post.data.title}</h3>
+          <p class="mt-1 text-sm text-[#8a8a8a]">{post.data.description}</p>
+        </a>
+      ))
+    }
+  </div>
+</section>

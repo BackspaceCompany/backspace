@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/data/projects";
@@ -24,8 +23,8 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       onBlur={() => setHovered(false)}
       className="border-t border-[#e6e6e6] first:border-t-0"
     >
-      <Link
-        to={project.href}
+      <a
+        href={project.href}
         className="group relative block rounded-lg px-3 py-[18px] -mx-3 transition-colors hover:bg-[#f0f0f0]"
       >
         <div className="flex items-start justify-between gap-4">
@@ -68,7 +67,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             {project.letter}
           </div>
         </div>
-      </Link>
+      </a>
     </motion.article>
   );
 }
