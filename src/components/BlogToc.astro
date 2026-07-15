@@ -1,0 +1,28 @@
+---
+type Heading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+
+type Props = {
+  headings: Heading[];
+};
+
+const { headings } = Astro.props;
+const sections = headings.filter((h) => h.depth === 2);
+---
+
+{
+  sections.length > 0 && (
+    <nav aria-label="Table of contents" class="blog-toc">
+      <ul>
+        {sections.map((heading) => (
+          <li>
+            <a href={`#${heading.slug}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

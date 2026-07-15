@@ -31,7 +31,7 @@ function formatDate(date: Date) {
       posts.map((post) => (
         <a
           href={`/blog/${post.id}`}
-          class="group block py-5 transition-colors hover:bg-[#f0f0f0] -mx-3 px-3 rounded-lg"
+          class="group block py-5"
         >
           <time class="text-xs text-[#8a8a8a]" datetime={post.data.pubDate.toISOString()}>
             {formatDate(post.data.pubDate)}
