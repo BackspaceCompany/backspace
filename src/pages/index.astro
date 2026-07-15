@@ -1,36 +1,387 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import "@/styles/global.css";
 import { getCollection } from "astro:content";
 import { projects } from "@/data/projects";
-import { HomeHero } from "@/components/home-hero";
-import { QuoteBlock } from "@/components/quote-block";
-import { ProjectCard } from "@/components/project-card";
-import { CompanyLogos } from "@/components/company-logos";
-import { SiteFooter } from "@/components/site-footer";
-import BlogPreview from "@/components/BlogPreview.astro";
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
 ---
 
-<Layout title="Backspace® 2024–2026">
-  <main class="bg-background text-foreground">
-    <div class="mx-auto max-w-[760px] px-6">
-      <HomeHero client:load />
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backspace® 2024–2026</title>
+    <meta name="description" content="Backspace is a venture studio building data, commerce and AI products." />
+    <meta name="theme-color" content="#2b2926" />
+  </head>
+  <body class="obs">
+    <div class="frame">
+      <!-- ── header row ─────────────────────────────── -->
+      <header class="row head">
+        <a class="brand" href="/"><span class="mark">⌫</span> Backspace</a>
+        <div class="head-mid">BSP–001<br />VENTURE STUDIO SPECIMEN</div>
+        <nav class="head-right">
+          <a href="/blog">BLOG</a>
+          <a href="mailto:hello@backspace.company">EMAIL</a>
+          <a href="mailto:hello@backspace.company">GET IN TOUCH</a>
+        </nav>
+      </header>
 
-      <QuoteBlock client:visible />
+      <!-- ── meta row ────────────────────────────────── -->
+      <div class="row meta">
+        <div class="cell"><span class="lbl">Subject</span><b>Studio / Data · Commerce · AI</b></div>
+        <div class="cell"><span class="lbl">Coordinates</span><b>Abidjan / Paris</b></div>
+        <div class="cell"><span class="lbl">Instruction</span><b>Move · Adjust · Invert</b></div>
+      </div>
 
-      <section class="border-t border-[#e6e6e6] pb-2 pt-2" aria-label="Projects">
-        {projects.map((project, index) => (
-          <ProjectCard client:visible project={project} index={index} />
+      <!-- ── hero split ──────────────────────────────── -->
+      <div class="hero">
+        <div class="hero-left">
+          <span class="pill">Live Portfolio</span>
+
+          <div class="stat">
+            <div class="stat-num"><span id="force">82</span>%</div>
+            <div class="stat-lbl">Studio Force</div>
+            <div class="stat-bar"><i id="force-bar" style="width:82%"></i></div>
+          </div>
+
+          <h1 class="giant">Back<br />Space</h1>
+          <p class="intro">
+            A venture studio by Charles-Emmanuel Ebagnitchie — building data, commerce
+            and AI products. Currently focused on Claveira and Akaragi.
+          </p>
+        </div>
+
+        <div class="hero-right" id="orbit-cell">
+          <span class="cell-lbl">Object / BSP–001</span>
+          <div class="orbit-wrap" id="orbit-wrap">
+            <svg id="orbit" viewBox="0 0 700 560" aria-label="Ventures orbiting the studio">
+              <g id="orbits" transform-origin="350 280">
+                <g transform="rotate(-18 350 280)">
+                  <ellipse cx="350" cy="280" rx="300" ry="118" />
+                  <ellipse cx="350" cy="280" rx="205" ry="80" />
+                  <ellipse cx="350" cy="280" rx="112" ry="44" />
+                </g>
+                <circle id="p0" r="17" />
+                <circle id="p1" r="15" />
+                <circle id="p2" r="10" />
+                <circle id="p3" r="7" />
+              </g>
+            </svg>
+          </div>
+          <span class="cell-lbl br">Pointer-Linked<br />Orbital Response</span>
+        </div>
+      </div>
+
+      <!-- ── ventures ────────────────────────────────── -->
+      <section class="section" aria-label="Ventures">
+        <div class="sec-head"><span class="lbl">Index</span><b>Ventures / 0{projects.length}</b></div>
+        {projects.map((p, i) => (
+          <a class="venture" href={p.href}>
+            <span class="v-idx">0{i + 1}</span>
+            <span class="v-name">{p.name}</span>
+            <span class="v-line">{p.cardLine}</span>
+            <span class={`v-status${p.live ? " live" : ""}`}>{p.status}</span>
+            <span class="v-arrow">↗</span>
+          </a>
         ))}
       </section>
 
-      <BlogPreview posts={posts} />
+      <!-- ── belief ──────────────────────────────────── -->
+      <section class="section quote" aria-label="Studio belief">
+        <span class="lbl">I Believe</span>
+        <blockquote>
+          “Building for <b>informal commerce</b> means systems that work <b>offline</b> first —
+          because <b>trust</b> is earned at the counter, not in the cloud…”
+        </blockquote>
+      </section>
 
-      <CompanyLogos client:visible />
+      <!-- ── transmissions ───────────────────────────── -->
+      <section class="section" aria-label="Blog">
+        <div class="sec-head"><span class="lbl">Signal</span><b>Transmissions</b><a class="all" href="/blog">All entries ↗</a></div>
+        {posts.map((post) => (
+          <a class="venture post" href={`/blog/${post.id}`}>
+            <span class="v-idx">{fmt(post.data.pubDate)}</span>
+            <span class="v-name">{post.data.title}</span>
+            <span class="v-arrow">↗</span>
+          </a>
+        ))}
+      </section>
+
+      <!-- ── control bar ─────────────────────────────── -->
+      <footer class="row ctrl">
+        <div class="ctrl-copy">Backspace © 2026<br />Interactive Venture Specimen</div>
+        <label>Orbit Size <input type="range" id="s-orbit" min="60" max="140" value="100" /> <output id="o-orbit">100</output></label>
+        <label>Speed <input type="range" id="s-speed" min="0" max="200" value="113" /> <output id="o-speed">113</output></label>
+        <label>Planet Size <input type="range" id="s-planet" min="40" max="160" value="100" /> <output id="o-planet">100</output></label>
+        <button class="pill btn" id="polarity" type="button">Switch Polarity</button>
+      </footer>
     </div>
-    <SiteFooter client:visible />
-  </main>
-</Layout>
+
+    <style>
+      .obs {
+        --bg: #2b2926;
+        --ink: #f2ecdf;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        min-height: 100vh;
+        transition: background 0.25s, color 0.25s;
+      }
+      .obs.polar {
+        --bg: #f2ecdf;
+        --ink: #2b2926;
+      }
+
+      .frame {
+        margin: 14px;
+        border: 1px solid var(--ink);
+      }
+      .row, .section, .hero { border-bottom: 1px solid var(--ink); }
+      .frame > :last-child { border-bottom: none; }
+
+      .lbl, .cell-lbl, .v-idx, .v-status, .stat-lbl, .ctrl-copy, .ctrl label, .head-mid, .head-right a, .all {
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* header */
+      .head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 24px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: inherit;
+        text-decoration: none;
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--ink);
+        border-radius: 8px;
+        font-size: 14px;
+      }
+      .head-mid { text-align: center; font-weight: 700; opacity: 0.85; }
+      .head-right { display: flex; gap: 18px; }
+      .head-right a { color: inherit; text-decoration: none; font-weight: 700; }
+      .head-right a:hover { text-decoration: underline; }
+
+      /* meta row */
+      .meta { display: grid; grid-template-columns: 1.4fr 1fr 1fr; }
+      .cell { padding: 14px 24px; border-left: 1px solid var(--ink); }
+      .cell:first-child { border-left: none; }
+      .lbl { display: block; opacity: 0.55; margin-bottom: 5px; }
+      .cell b { font-size: 13px; letter-spacing: 0.01em; text-transform: uppercase; }
+
+      /* hero */
+      .hero { display: grid; grid-template-columns: 1fr 1.15fr; }
+      .hero-left { padding: 26px 24px 30px; display: flex; flex-direction: column; align-items: flex-start; }
+      .pill {
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        padding: 7px 16px;
+        font-family: ui-monospace, monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .stat {
+        margin: 34px 0 auto;
+        background: var(--ink);
+        color: var(--bg);
+        padding: 14px 18px 16px;
+        min-width: 190px;
+        transition: background 0.25s, color 0.25s;
+      }
+      .stat-num { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+      .stat-lbl { margin-top: 6px; opacity: 0.7; }
+      .stat-bar { margin-top: 10px; height: 3px; background: color-mix(in srgb, var(--bg) 25%, transparent); }
+      .stat-bar i { display: block; height: 100%; background: var(--bg); transition: width 0.15s; }
+      .giant {
+        margin: 40px 0 0;
+        font-size: clamp(64px, 11vw, 150px);
+        font-weight: 900;
+        line-height: 0.86;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+      }
+      .intro { max-width: 420px; margin: 26px 0 0; font-size: 14px; line-height: 1.6; opacity: 0.75; }
+
+      /* orbit cell */
+      .hero-right {
+        position: relative;
+        border-left: 1px solid var(--ink);
+        overflow: hidden;
+        background:
+          linear-gradient(var(--ink), var(--ink)) 50% 0 / 1px 100% no-repeat,
+          linear-gradient(var(--ink), var(--ink)) 0 50% / 100% 1px no-repeat;
+      }
+      .cell-lbl { position: absolute; top: 14px; left: 20px; font-weight: 700; z-index: 2; }
+      .cell-lbl.br { top: auto; left: auto; bottom: 14px; right: 20px; text-align: right; }
+      .orbit-wrap { height: 100%; min-height: 460px; perspective: 900px; }
+      #orbit { width: 100%; height: 100%; display: block; transition: transform 0.2s ease-out; }
+      #orbit ellipse { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+      #orbit circle { fill: var(--ink); }
+
+      /* sections */
+      .sec-head { display: flex; align-items: baseline; gap: 18px; padding: 14px 24px; border-bottom: 1px solid var(--ink); }
+      .sec-head b { font-size: 13px; text-transform: uppercase; }
+      .sec-head .lbl { margin: 0; }
+      .all { margin-left: auto; color: inherit; text-decoration: none; font-weight: 700; }
+      .all:hover { text-decoration: underline; }
+
+      .venture {
+        display: grid;
+        grid-template-columns: 90px 220px 1fr auto 30px;
+        align-items: center;
+        gap: 18px;
+        padding: 18px 24px;
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid var(--ink);
+      }
+      .section .venture:last-child { border-bottom: none; }
+      .venture:hover { background: var(--ink); color: var(--bg); }
+      .v-idx { opacity: 0.55; }
+      .v-name { font-size: 19px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
+      .v-line { font-size: 13px; opacity: 0.7; }
+      .v-status { border: 1px solid currentColor; border-radius: 999px; padding: 3px 10px; font-weight: 700; }
+      .v-status.live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 6px; vertical-align: 1px; }
+      .v-arrow { font-size: 18px; text-align: right; }
+      .post { grid-template-columns: 130px 1fr 30px; }
+
+      .quote { padding: 34px 24px 40px; }
+      .quote blockquote { margin: 14px 0 0; max-width: 640px; font-size: clamp(20px, 2.6vw, 28px); line-height: 1.4; letter-spacing: -0.01em; }
+      .quote b { font-weight: 800; }
+
+      /* control bar */
+      .ctrl { display: flex; align-items: center; gap: 28px; padding: 16px 24px; flex-wrap: wrap; }
+      .ctrl-copy { line-height: 1.6; opacity: 0.85; margin-right: auto; }
+      .ctrl label { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+      .ctrl output { min-width: 3ch; }
+      .ctrl input[type="range"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 130px;
+        height: 1px;
+        background: var(--ink);
+        outline: none;
+      }
+      .ctrl input[type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 1.5px solid var(--ink);
+        cursor: pointer;
+      }
+      .ctrl input[type="range"]::-moz-range-thumb {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 1.5px solid var(--ink);
+        cursor: pointer;
+      }
+      .btn { background: none; color: inherit; cursor: pointer; }
+      .btn:hover { background: var(--ink); color: var(--bg); }
+
+      @media (max-width: 900px) {
+        .hero { grid-template-columns: 1fr; }
+        .hero-right { border-left: none; border-top: 1px solid var(--ink); min-height: 380px; }
+        .meta { grid-template-columns: 1fr; }
+        .cell { border-left: none; border-top: 1px solid var(--ink); }
+        .cell:first-child { border-top: none; }
+        .head-mid { display: none; }
+        .venture { grid-template-columns: 1fr auto; grid-auto-flow: dense; }
+        .v-idx, .v-line { grid-column: 1 / -1; }
+        .stat { margin: 28px 0 0; }
+        .giant { margin-top: 32px; }
+      }
+    </style>
+
+    <script>
+      const $ = (id: string) => document.getElementById(id)!;
+      const orbits = $("orbits");
+      const planets = [
+        { el: $("p0"), rx: 300, ry: 118, r: 17, a: 2.6, v: 0.28 },
+        { el: $("p1"), rx: 300, ry: 118, r: 15, a: 5.9, v: 0.22 },
+        { el: $("p2"), rx: 205, ry: 80, r: 10, a: 1.1, v: 0.4 },
+        { el: $("p3"), rx: 112, ry: 44, r: 7, a: 4.2, v: 0.65 },
+      ];
+      const TILT = (-18 * Math.PI) / 180;
+      const [cos, sin] = [Math.cos(TILT), Math.sin(TILT)];
+
+      let speed = 113, orbitScale = 1, planetScale = 1;
+      let last = performance.now();
+
+      function frame(now: number) {
+        const dt = (now - last) / 1000;
+        last = now;
+        for (const p of planets) {
+          p.a += p.v * dt * (speed / 100);
+          const x = p.rx * Math.cos(p.a), y = p.ry * Math.sin(p.a);
+          p.el.setAttribute("cx", String(350 + x * cos - y * sin));
+          p.el.setAttribute("cy", String(280 + x * sin + y * cos));
+          p.el.setAttribute("r", String(p.r * planetScale));
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+
+      const bind = (slider: string, out: string, fn: (v: number) => void) => {
+        const s = $(slider) as HTMLInputElement;
+        s.addEventListener("input", () => {
+          $(out).textContent = s.value;
+          fn(Number(s.value));
+        });
+      };
+      bind("s-orbit", "o-orbit", (v) => {
+        orbitScale = v / 100;
+        orbits.setAttribute("transform", `scale(${orbitScale})`);
+      });
+      bind("s-speed", "o-speed", (v) => {
+        speed = v;
+        const force = Math.min(100, Math.round(40 + v * 0.37)); // ponytail: decorative "force" metric, derived from speed
+        $("force").textContent = String(force);
+        ($("force-bar") as HTMLElement).style.width = `${force}%`;
+      });
+      bind("s-planet", "o-planet", (v) => (planetScale = v / 100));
+
+      // pointer-linked orbital response
+      const cell = $("orbit-cell"), svg = $("orbit");
+      cell.addEventListener("pointermove", (e) => {
+        const b = cell.getBoundingClientRect();
+        const dx = (e.clientX - b.left) / b.width - 0.5;
+        const dy = (e.clientY - b.top) / b.height - 0.5;
+        svg.style.transform = `rotateY(${dx * 14}deg) rotateX(${-dy * 14}deg)`;
+      });
+      cell.addEventListener("pointerleave", () => (svg.style.transform = ""));
+
+      $("polarity").addEventListener("click", () => document.body.classList.toggle("polar"));
+    </script>
+  </body>
+</html>
