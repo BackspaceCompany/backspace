@@ -18,7 +18,10 @@ const currentPath = Astro.url.pathname;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#fafafa" />
+    <meta name="theme-color" content="#2b2926" />
+    <script is:inline>
+      document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
+    </script>
   </head>
   <body>
     <Navbar client:load currentPath={currentPath} />

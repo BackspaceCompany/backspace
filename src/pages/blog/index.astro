@@ -20,23 +20,23 @@ function formatDate(date: Date) {
   <main class="bg-background text-foreground">
     <div class="mx-auto max-w-[760px] px-6 pb-14 pt-16 md:pt-[64px]">
       <h1 class="mb-2 text-[22px] font-medium tracking-[-0.2px]">Blog</h1>
-      <p class="mb-10 max-w-[560px] text-[#8a8a8a]">
+      <p class="mb-10 max-w-[560px] text-muted-foreground">
         Notes on AI systems, informal commerce, and building products at Backspace.
       </p>
 
-      <div class="divide-y divide-[#e6e6e6] border-y border-[#e6e6e6]">
+      <div class="divide-y divide-border border-y border-border">
         {
           posts.map((post) => (
             <a
               href={`/blog/${post.id}`}
-              class="group block py-6 transition-colors hover:bg-[#f0f0f0] -mx-3 px-3 rounded-lg"
+              class="group block py-6 transition-colors hover:bg-muted -mx-3 px-3 rounded-lg"
             >
-              <time class="text-xs text-[#8a8a8a]" datetime={post.data.pubDate.toISOString()}>
+              <time class="text-xs text-muted-foreground" datetime={post.data.pubDate.toISOString()}>
                 {formatDate(post.data.pubDate)}
               </time>
               <h2 class="mt-1 text-lg font-semibold group-hover:underline">{post.data.title}</h2>
-              <p class="mt-2 text-sm leading-relaxed text-[#8a8a8a]">{post.data.description}</p>
-              <span class="mt-3 inline-block text-sm font-medium text-[#111]">Read article →</span>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{post.data.description}</p>
+              <span class="mt-3 inline-block text-sm font-medium text-foreground">Read article →</span>
             </a>
           ))
         }

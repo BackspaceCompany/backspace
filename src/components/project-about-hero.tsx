@@ -40,7 +40,7 @@ function TrustedLogoCell({ name, icon }: { name: string; icon: string }) {
   if (!Icon) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2 px-4 py-5 text-[#8a8a8a]">
+    <div className="flex flex-col items-center justify-center gap-2 px-4 py-5 text-muted-foreground">
       <Icon className="h-5 w-5" strokeWidth={1.5} />
       <span className="text-sm font-medium tracking-tight">{name}</span>
     </div>
@@ -57,10 +57,10 @@ export function ProjectAboutHero({ project }: ProjectAboutHeroProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="border-b border-[#e6e6e6] pb-10 pt-12 md:pb-12 md:pt-16"
+      className="border-b border-border pb-10 pt-12 md:pb-12 md:pt-16"
       aria-label={`About ${project.name}`}
     >
-      <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-[#e6e6e6] bg-white px-4 py-2 text-sm text-[#8a8a8a]">
+      <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground">
         <span
           className="h-2 w-2 rounded-full"
           style={{ backgroundColor: project.color }}
@@ -71,16 +71,16 @@ export function ProjectAboutHero({ project }: ProjectAboutHeroProps) {
 
       <RichParagraph
         segments={project.about.paragraph1}
-        className="mb-6 text-[24px] font-normal leading-[1.35] tracking-[-0.3px] text-[#111] md:text-[30px]"
+        className="mb-6 text-[24px] font-normal leading-[1.35] tracking-[-0.3px] text-foreground md:text-[30px]"
       />
 
       <RichParagraph
         segments={project.about.paragraph2}
-        className="mb-10 text-[18px] font-normal leading-[1.4] tracking-[-0.2px] text-[#8a8a8a] md:text-[22px]"
+        className="mb-10 text-[18px] font-normal leading-[1.4] tracking-[-0.2px] text-muted-foreground md:text-[22px]"
       />
 
-      <div className="border border-[#e6e6e6] bg-white">
-        <p className="border-b border-[#e6e6e6] py-5 text-center text-sm text-[#8a8a8a]">
+      <div className="border border-border bg-card">
+        <p className="border-b border-border py-5 text-center text-sm text-muted-foreground">
           {project.about.trustedLabel}
         </p>
 
@@ -89,7 +89,7 @@ export function ProjectAboutHero({ project }: ProjectAboutHeroProps) {
             <div
               key={logo.name}
               className={[
-                "border-[#e6e6e6]",
+                "border-border",
                 index % 2 === 0 ? "border-r" : "",
                 index < 2 ? "border-b sm:border-b-0" : "",
                 index < 3 ? "sm:border-r" : "",

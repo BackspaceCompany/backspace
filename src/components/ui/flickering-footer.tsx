@@ -34,7 +34,7 @@ function BackspaceMark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "flex h-8 w-8 items-center justify-center rounded-[7px] bg-[#111] text-sm font-bold text-[#fafafa]",
+        "flex h-8 w-8 items-center justify-center rounded-[7px] bg-foreground text-sm font-bold text-background",
         className,
       )}
       aria-hidden="true"
@@ -283,32 +283,32 @@ export function FlickeringFooter() {
 
   return (
     <footer id="footer" className="w-full pb-0">
-      <div className="flex flex-col border-t border-[#e6e6e6] p-10 md:flex-row md:items-start md:justify-between">
+      <div className="flex flex-col border-t border-border p-10 md:flex-row md:items-start md:justify-between">
         <div className="mx-0 flex max-w-xs flex-col items-start justify-start gap-y-5">
           <a href="/" className="flex items-center gap-2.5">
             <BackspaceMark />
-            <p className="text-xl font-semibold text-[#111]">Backspace</p>
+            <p className="text-xl font-semibold text-foreground">Backspace</p>
           </a>
-          <p className="font-medium tracking-tight text-[#8a8a8a]">
+          <p className="font-medium tracking-tight text-muted-foreground">
             {footerConfig.description}
           </p>
-          <p className="text-[13px] text-[#8a8a8a]">Backspace® 2024–2026 · Paris · Abidjan</p>
+          <p className="text-[13px] text-muted-foreground">Backspace® 2024–2026 · Paris · Abidjan</p>
         </div>
 
         <div className="pt-8 md:w-1/2 md:pt-0">
           <div className="flex flex-col items-start justify-start gap-y-8 md:flex-row md:items-start md:justify-between lg:pl-10">
             {footerConfig.columns.map((column) => (
               <ul key={column.title} className="flex flex-col gap-y-2">
-                <li className="mb-2 text-sm font-semibold text-[#111]">{column.title}</li>
+                <li className="mb-2 text-sm font-semibold text-foreground">{column.title}</li>
                 {column.links.map((link) => (
                   <li
                     key={link.id}
-                    className="group inline-flex cursor-pointer items-center justify-start gap-1 text-[15px]/snug text-[#8a8a8a]"
+                    className="group inline-flex cursor-pointer items-center justify-start gap-1 text-[15px]/snug text-muted-foreground"
                   >
-                    <a href={link.url} className="transition-colors hover:text-[#111]">
+                    <a href={link.url} className="transition-colors hover:text-foreground">
                       {link.title}
                     </a>
-                    <div className="flex size-4 translate-x-0 transform items-center justify-center rounded border border-[#e6e6e6] opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100">
+                    <div className="flex size-4 translate-x-0 transform items-center justify-center rounded border border-border opacity-0 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:opacity-100">
                       <ChevronRightIcon className="h-3 w-3" />
                     </div>
                   </li>
@@ -320,7 +320,7 @@ export function FlickeringFooter() {
       </div>
 
       <div className="relative z-0 mt-16 h-48 w-full md:mt-24 md:h-64">
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#fafafa] from-40% to-transparent" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-background from-40% to-transparent" />
         <div className="absolute inset-0 mx-6">
           <FlickeringGrid
             text={tablet ? "Backspace" : "Backspace"}
@@ -328,7 +328,9 @@ export function FlickeringFooter() {
             className="h-full w-full"
             squareSize={2}
             gridGap={tablet ? 2 : 3}
-            color="#8a8a8a"
+            // ponytail: warm mid-tone reads on both granite and cream, so the canvas
+            // needs no theme wiring. Pass var(--muted-foreground) + remount on theme if it ever must match exactly.
+            color="#8f887a"
             maxOpacity={0.28}
             flickerChance={0.1}
           />
