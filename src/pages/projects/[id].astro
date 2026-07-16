@@ -20,51 +20,46 @@ if (!project) {
 
 <Layout title={`${project.name} — Backspace®`} description={project.lead}>
   <main class="bg-background text-foreground">
-    <div class="mx-auto max-w-[760px] px-6">
-      <ProjectAboutHero client:load project={project} />
-
-      <div class="flex items-center gap-3 border-b border-border py-8">
-        <div
-          class="flex h-9 w-9 items-center justify-center rounded-lg text-sm font-bold text-white"
-          style={{ background: project.color }}
-        >
-          {project.letter}
+    <div class="plate">
+      <div class="plate-meta">
+        <div>
+          <span class="mono-lbl block opacity-55">Subject</span>
+          <b class="mt-1 block text-[13px] uppercase tracking-wide">{project.name}</b>
         </div>
         <div>
-          <p class="text-[13px] text-muted-foreground">{project.role}</p>
-          <p class="text-sm font-medium">
-            {project.name}
-            <span
-              class:list={[
-                "ml-2 inline-flex items-center gap-1 rounded-full border border-border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground",
-                project.live && "before:inline-block before:h-1.5 before:w-1.5 before:rounded-full before:bg-[#0f7b4d]",
-              ]}
-            >
-              {project.status}
-            </span>
-          </p>
+          <span class="mono-lbl block opacity-55">Role</span>
+          <b class="mt-1 block text-[13px] uppercase tracking-wide">{project.role}</b>
+        </div>
+        <div>
+          <span class="mono-lbl block opacity-55">Status</span>
+          <span
+            class:list={[
+              "plate-badge mono-lbl mt-1 inline-flex",
+              project.live && "live",
+            ]}
+          >
+            {project.status}
+          </span>
         </div>
       </div>
 
-      <section class="border-b border-border py-10">
-        <h2 class="mb-4 text-[13px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
-          Roadmap
-        </h2>
-        <p class="max-w-[560px] italic text-muted-foreground">
+      <ProjectAboutHero client:load project={project} />
+
+      <section class="px-6 py-9 md:px-8">
+        <h2 class="mono-lbl mb-4 opacity-55">Roadmap</h2>
+        <p class="max-w-[560px] italic opacity-75">
           Milestones and timeline will go here — you'll define the roadmap for {project.name} next.
         </p>
       </section>
 
-      <section class="py-10">
-        <h2 class="mb-4 text-[13px] font-semibold uppercase tracking-[0.06em] text-muted-foreground">
-          Work in progress
-        </h2>
+      <section class="px-6 py-9 md:px-8">
+        <h2 class="mono-lbl mb-4 opacity-55">Work in progress</h2>
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div class="flex aspect-[16/10] items-center justify-center rounded-xl border border-border bg-card text-xs uppercase tracking-wide text-muted-foreground sm:col-span-2 sm:aspect-[21/9]">
+          <div class="mono-lbl flex aspect-[16/10] items-center justify-center border border-border opacity-55 sm:col-span-2 sm:aspect-[21/9]">
             preview
           </div>
         </div>
-        <a href="/" class="mt-8 inline-block text-sm text-muted-foreground transition-colors hover:text-foreground">
+        <a href="/" class="mono-lbl mt-8 inline-block transition-colors hover:opacity-60">
           ← Back to studio
         </a>
       </section>

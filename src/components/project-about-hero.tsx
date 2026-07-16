@@ -57,7 +57,7 @@ export function ProjectAboutHero({ project }: ProjectAboutHeroProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="border-b border-border pb-10 pt-12 md:pb-12 md:pt-16"
+      className="px-6 py-9 md:px-8"
       aria-label={`About ${project.name}`}
     >
       <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm text-muted-foreground">

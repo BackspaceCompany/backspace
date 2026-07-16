@@ -17,7 +17,6 @@ type NavbarProps = {
 
 export function Navbar({ currentPath }: NavbarProps) {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const menuRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
@@ -50,12 +49,6 @@ export function Navbar({ currentPath }: NavbarProps) {
   };
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
     closeMenu();
   }, [currentPath]);
 
@@ -76,17 +69,12 @@ export function Navbar({ currentPath }: NavbarProps) {
   }, []);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 border-b border-transparent bg-background/85 backdrop-blur-md transition-colors",
-        scrolled && "border-border",
-      )}
-    >
-      <div className="mx-auto flex max-w-[760px] items-center gap-3 px-6 py-3.5 text-[13px] sm:gap-5">
+    <header className="sticky top-0 z-50 border-b border-border bg-background">
+      <div className="mx-auto flex max-w-[760px] items-center gap-3 px-6 py-3.5 sm:gap-5">
         <a
           href="/"
           aria-label="Backspace home"
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[7px] bg-foreground text-sm font-bold text-background transition-transform hover:scale-95"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] border border-foreground text-sm font-bold transition-colors hover:bg-foreground hover:text-background"
         >
           ⌫
         </a>
@@ -102,7 +90,7 @@ export function Navbar({ currentPath }: NavbarProps) {
             aria-expanded={open}
             aria-haspopup="true"
             onClick={() => (open ? closeMenu() : openMenu())}
-            className="inline-flex items-center gap-1 rounded-full px-2.5 py-1.5 font-medium transition-colors hover:bg-muted sm:px-3"
+            className="mono-lbl inline-flex items-center gap-1 rounded-full border border-border px-3 py-1.5 transition-colors hover:border-foreground"
           >
             Projects
             <ChevronDown className={cn("h-3 w-3 transition-transform", open && "rotate-180")} />
@@ -116,7 +104,7 @@ export function Navbar({ currentPath }: NavbarProps) {
           >
             <div
               className={cn(
-                "rounded-2xl border border-border bg-card p-3.5 shadow-[0_20px_48px_rgba(0,0,0,0.28)] transition-all duration-200",
+                "border border-border bg-background p-3.5 transition-all duration-200",
                 open
                   ? "translate-y-0 scale-100 opacity-100"
                   : "translate-y-1 scale-[0.98] opacity-0",
@@ -132,19 +120,19 @@ export function Navbar({ currentPath }: NavbarProps) {
                     href={p.href}
                     onClick={closeMenu}
                     className={cn(
-                      "flex gap-3 rounded-xl p-3 transition-colors hover:bg-muted",
+                      "flex gap-3 p-3 transition-colors hover:bg-foreground hover:text-background",
                       activeId === p.id && "bg-muted",
                     )}
                   >
                     <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[9px] text-sm font-bold text-white"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[8px] text-sm font-bold text-white"
                       style={{ background: p.color }}
                     >
                       {p.letter}
                     </div>
                     <div>
                       <b className="block text-sm font-semibold">{p.name}</b>
-                      <span className="block text-xs leading-snug text-muted-foreground">{p.tagline}</span>
+                      <span className="block text-xs leading-snug opacity-70">{p.tagline}</span>
                     </div>
                   </a>
                 ))}
@@ -153,7 +141,7 @@ export function Navbar({ currentPath }: NavbarProps) {
           </div>
         </div>
 
-        <div className="hidden items-center gap-4 text-muted-foreground md:flex md:gap-[18px]">
+        <div className="mono-lbl hidden items-center gap-4 text-muted-foreground md:flex md:gap-[18px]">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -175,15 +163,12 @@ export function Navbar({ currentPath }: NavbarProps) {
             onClick={toggleTheme}
             aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
             title="Toggle theme"
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+            className="plate-icon-btn h-7 w-7"
           >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            {theme === "dark" ? <Sun className="h-3.5 w-3.5" /> : <Moon className="h-3.5 w-3.5" />}
           </button>
 
-          <a
-            href="mailto:hello@backspace.company"
-            className="rounded-full border border-foreground px-3 py-1.5 text-[12px] font-medium transition-all hover:-translate-y-px hover:bg-foreground hover:text-background hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] sm:px-4 sm:py-2 sm:text-[13px]"
-          >
+          <a href="mailto:hello@backspace.company" className="plate-btn mono-lbl">
             Get in touch
           </a>
         </div>
