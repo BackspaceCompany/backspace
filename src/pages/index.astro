@@ -1,5 +1,5 @@
 ---
-import "@/styles/global.css";
+import Layout from "@/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import { projects } from "@/data/projects";
 
@@ -11,37 +11,9 @@ const fmt = (d: Date) =>
   d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).toUpperCase();
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Backspace® 2024–2026</title>
-    <meta name="description" content="Backspace is a venture studio building data, commerce and AI products." />
-    <meta name="theme-color" content="#2b2926" />
-    <script is:inline>
-      document.documentElement.dataset.theme = localStorage.getItem("theme") || "dark";
-    </script>
-  </head>
-  <body class="obs">
+<Layout title="Backspace® 2024–2026" description="Backspace is a venture studio building data, commerce and AI products.">
+  <div class="obs">
     <div class="frame">
-      <!-- ── header row ─────────────────────────────── -->
-      <header class="row head">
-        <a class="brand" href="/"><span class="mark">⌫</span> Backspace</a>
-        <div class="head-mid">BSP–001<br />VENTURE STUDIO SPECIMEN</div>
-        <nav class="head-right">
-          <a href="/blog">BLOG</a>
-          <a href="mailto:hello@backspace.company">EMAIL</a>
-          <a href="mailto:hello@backspace.company">GET IN TOUCH</a>
-          <button class="theme-tog" id="theme-tog" type="button" title="Toggle theme" aria-label="Toggle theme">
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <circle cx="8" cy="8" r="6.5" />
-              <path d="M8 1.5A6.5 6.5 0 0 1 8 14.5Z" />
-            </svg>
-          </button>
-        </nav>
-      </header>
-
       <!-- ── meta row ────────────────────────────────── -->
       <div class="row meta">
         <div class="cell"><span class="lbl">Subject</span><b>Studio / Data · Commerce · AI</b></div>
@@ -134,88 +106,30 @@ const fmt = (d: Date) =>
     </div>
 
     <style>
-      /* theme comes from html[data-theme]; dark (granite) is the default */
+      /* header now comes from the shared Navbar (Layout.astro); this file only
+         styles the specimen frame below it, driven by the same --background/
+         --foreground tokens (global.css) so both stay in sync under one theme. */
       .obs {
-        --bg: #2b2926;
-        --ink: #f2ecdf;
-        background: var(--bg);
-        color: var(--ink);
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         min-height: 100vh;
-        transition: background 0.25s, color 0.25s;
-      }
-      :root[data-theme="light"] .obs {
-        --bg: #f2ecdf;
-        --ink: #2b2926;
       }
 
       .frame {
         margin: 14px;
-        border: 1px solid var(--ink);
+        border: 1px solid var(--foreground);
       }
-      .row, .section, .hero { border-bottom: 1px solid var(--ink); }
+      .row, .section, .hero { border-bottom: 1px solid var(--foreground); }
       .frame > :last-child { border-bottom: none; }
 
-      .lbl, .cell-lbl, .v-idx, .v-status, .stat-lbl, .ctrl-copy, .ctrl label, .head-mid, .head-right a, .all {
+      .lbl, .cell-lbl, .v-idx, .v-status, .stat-lbl, .ctrl-copy, .ctrl label, .all {
         font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
         font-size: 10px;
         letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
-      /* header */
-      .head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 18px 24px;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: inherit;
-        text-decoration: none;
-        font-size: 19px;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-      }
-      .mark {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        border: 1px solid var(--ink);
-        border-radius: 8px;
-        font-size: 14px;
-      }
-      .head-mid { text-align: center; font-weight: 700; opacity: 0.85; }
-      .head-right { display: flex; align-items: center; gap: 18px; }
-      .head-right a { color: inherit; text-decoration: none; font-weight: 700; }
-      .head-right a:hover { text-decoration: underline; }
-      .theme-tog {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 26px;
-        height: 26px;
-        padding: 0;
-        border: 1px solid var(--ink);
-        border-radius: 50%;
-        background: none;
-        color: inherit;
-        cursor: pointer;
-      }
-      .theme-tog svg { width: 13px; height: 13px; }
-      .theme-tog circle { fill: none; stroke: currentColor; stroke-width: 1.5; }
-      .theme-tog path { fill: currentColor; }
-      .theme-tog:hover { background: var(--ink); color: var(--bg); }
-
       /* meta row */
       .meta { display: grid; grid-template-columns: 1.4fr 1fr 1fr; }
-      .cell { padding: 14px 24px; border-left: 1px solid var(--ink); }
+      .cell { padding: 14px 24px; border-left: 1px solid var(--foreground); }
       .cell:first-child { border-left: none; }
       .lbl { display: block; opacity: 0.55; margin-bottom: 5px; }
       .cell b { font-size: 13px; letter-spacing: 0.01em; text-transform: uppercase; }
@@ -224,7 +138,7 @@ const fmt = (d: Date) =>
       .hero { display: grid; grid-template-columns: 1fr 1.15fr; }
       .hero-left { padding: 26px 24px 30px; display: flex; flex-direction: column; align-items: flex-start; }
       .pill {
-        border: 1px solid var(--ink);
+        border: 1px solid var(--foreground);
         border-radius: 999px;
         padding: 7px 16px;
         font-family: ui-monospace, monospace;
@@ -235,16 +149,16 @@ const fmt = (d: Date) =>
       }
       .stat {
         margin: 34px 0 auto;
-        background: var(--ink);
-        color: var(--bg);
+        background: var(--foreground);
+        color: var(--background);
         padding: 14px 18px 16px;
         min-width: 190px;
         transition: background 0.25s, color 0.25s;
       }
       .stat-num { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
       .stat-lbl { margin-top: 6px; opacity: 0.7; }
-      .stat-bar { margin-top: 10px; height: 3px; background: color-mix(in srgb, var(--bg) 25%, transparent); }
-      .stat-bar i { display: block; height: 100%; background: var(--bg); transition: width 0.15s; }
+      .stat-bar { margin-top: 10px; height: 3px; background: color-mix(in srgb, var(--background) 25%, transparent); }
+      .stat-bar i { display: block; height: 100%; background: var(--background); transition: width 0.15s; }
       .giant {
         margin: 40px 0 0;
         font-size: clamp(64px, 11vw, 150px);
@@ -258,21 +172,21 @@ const fmt = (d: Date) =>
       /* orbit cell */
       .hero-right {
         position: relative;
-        border-left: 1px solid var(--ink);
+        border-left: 1px solid var(--foreground);
         overflow: hidden;
         background:
-          linear-gradient(var(--ink), var(--ink)) 50% 0 / 1px 100% no-repeat,
-          linear-gradient(var(--ink), var(--ink)) 0 50% / 100% 1px no-repeat;
+          linear-gradient(var(--foreground), var(--foreground)) 50% 0 / 1px 100% no-repeat,
+          linear-gradient(var(--foreground), var(--foreground)) 0 50% / 100% 1px no-repeat;
       }
       .cell-lbl { position: absolute; top: 14px; left: 20px; font-weight: 700; z-index: 2; }
       .cell-lbl.br { top: auto; left: auto; bottom: 14px; right: 20px; text-align: right; }
       .orbit-wrap { height: 100%; min-height: 460px; perspective: 900px; }
       #orbit { width: 100%; height: 100%; display: block; transition: transform 0.2s ease-out; }
-      #orbit ellipse { fill: none; stroke: var(--ink); stroke-width: 1.5; }
-      #orbit circle { fill: var(--ink); }
+      #orbit ellipse { fill: none; stroke: var(--foreground); stroke-width: 1.5; }
+      #orbit circle { fill: var(--foreground); }
 
       /* sections */
-      .sec-head { display: flex; align-items: baseline; gap: 18px; padding: 14px 24px; border-bottom: 1px solid var(--ink); }
+      .sec-head { display: flex; align-items: baseline; gap: 18px; padding: 14px 24px; border-bottom: 1px solid var(--foreground); }
       .sec-head b { font-size: 13px; text-transform: uppercase; }
       .sec-head .lbl { margin: 0; }
       .all { margin-left: auto; color: inherit; text-decoration: none; font-weight: 700; }
@@ -286,10 +200,10 @@ const fmt = (d: Date) =>
         padding: 18px 24px;
         color: inherit;
         text-decoration: none;
-        border-bottom: 1px solid var(--ink);
+        border-bottom: 1px solid var(--foreground);
       }
       .section .venture:last-child { border-bottom: none; }
-      .venture:hover { background: var(--ink); color: var(--bg); }
+      .venture:hover { background: var(--foreground); color: var(--background); }
       .v-idx { opacity: 0.55; }
       .v-name { font-size: 19px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; }
       .v-line { font-size: 13px; opacity: 0.7; }
@@ -312,7 +226,7 @@ const fmt = (d: Date) =>
         -webkit-appearance: none;
         width: 130px;
         height: 1px;
-        background: var(--ink);
+        background: var(--foreground);
         outline: none;
       }
       .ctrl input[type="range"]::-webkit-slider-thumb {
@@ -321,28 +235,27 @@ const fmt = (d: Date) =>
         width: 14px;
         height: 14px;
         border-radius: 50%;
-        background: var(--bg);
-        border: 1.5px solid var(--ink);
+        background: var(--background);
+        border: 1.5px solid var(--foreground);
         cursor: pointer;
       }
       .ctrl input[type="range"]::-moz-range-thumb {
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background: var(--bg);
-        border: 1.5px solid var(--ink);
+        background: var(--background);
+        border: 1.5px solid var(--foreground);
         cursor: pointer;
       }
       .btn { background: none; color: inherit; cursor: pointer; }
-      .btn:hover { background: var(--ink); color: var(--bg); }
+      .btn:hover { background: var(--foreground); color: var(--background); }
 
       @media (max-width: 900px) {
         .hero { grid-template-columns: 1fr; }
-        .hero-right { border-left: none; border-top: 1px solid var(--ink); min-height: 380px; }
+        .hero-right { border-left: none; border-top: 1px solid var(--foreground); min-height: 380px; }
         .meta { grid-template-columns: 1fr; }
-        .cell { border-left: none; border-top: 1px solid var(--ink); }
+        .cell { border-left: none; border-top: 1px solid var(--foreground); }
         .cell:first-child { border-top: none; }
-        .head-mid { display: none; }
         .venture { grid-template-columns: 1fr auto; grid-auto-flow: dense; }
         .v-idx, .v-line { grid-column: 1 / -1; }
         .stat { margin: 28px 0 0; }
@@ -408,14 +321,13 @@ const fmt = (d: Date) =>
       });
       cell.addEventListener("pointerleave", () => (svg.style.transform = ""));
 
-      // shared with the blog/project header switcher via html[data-theme] + localStorage
-      const toggleTheme = () => {
+      // writes the same html[data-theme] + localStorage key as the shared
+      // header's toggle (Navbar.tsx), so the two controls stay in sync
+      $("polarity").addEventListener("click", () => {
         const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
         document.documentElement.dataset.theme = next;
         localStorage.setItem("theme", next);
-      };
-      $("polarity").addEventListener("click", toggleTheme);
-      $("theme-tog").addEventListener("click", toggleTheme);
+      });
     </script>
-  </body>
-</html>
+  </div>
+</Layout>

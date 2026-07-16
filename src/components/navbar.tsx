@@ -23,12 +23,18 @@ export function Navbar({ currentPath }: NavbarProps) {
   const activeId = currentPath.match(/\/projects\/([^/]+)/)?.[1];
 
   useEffect(() => {
-    setTheme((document.documentElement.dataset.theme as "dark" | "light") || "dark");
+    const root = document.documentElement;
+    const sync = () => setTheme((root.dataset.theme as "dark" | "light") || "dark");
+    sync();
+    // the homepage's own "Switch Polarity" control also flips this attribute
+    // outside React, so watch it directly rather than only reading on mount
+    const observer = new MutationObserver(sync);
+    observer.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
+    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
     document.documentElement.dataset.theme = next;
     localStorage.setItem("theme", next);
   };
