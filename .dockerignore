@@ -1,0 +1,2 @@
+# Keep the Rust harness (and its multi-GB target dir) out of the website image.
+backspace/
