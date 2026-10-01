@@ -10,6 +10,3 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 *.log
-
-# backspace harness (Rust)
-backspace/target
